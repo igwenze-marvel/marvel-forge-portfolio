@@ -215,3 +215,14 @@ $('#sound').addEventListener('click', () => {
 });
 
 }
+
+// Public source for visitors who want to explore how this portfolio was built.
+const portfolioFooter = document.querySelector('footer');
+if (portfolioFooter) {
+  const sourceLink = document.createElement('a');
+  sourceLink.href = 'https://github.com/igwenze-marvel/marvel-forge-portfolio';
+  sourceLink.textContent = 'Explore the source on GitHub ↗';
+  sourceLink.target = '_blank';
+  sourceLink.rel = 'noopener noreferrer';
+  portfolioFooter.append(sourceLink);
+}
