@@ -17,7 +17,15 @@ if (!document.body.classList.contains('project-page')) {
   const extras = [document.querySelector('.discipline-strip'), document.querySelector('.business-value')];
   document.body.classList.add('section-navigation');
   const nav = document.querySelector('header nav');
+  let menuToggle = document.querySelector('.mobile-menu-toggle');
+  if (!menuToggle && nav) {
+    menuToggle = document.createElement('button'); menuToggle.className = 'mobile-menu-toggle'; menuToggle.type = 'button'; menuToggle.setAttribute('aria-expanded', 'false'); menuToggle.setAttribute('aria-controls', 'main-navigation');
+    menuToggle.innerHTML = '<span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="sr-only">Open menu</span>'; nav.parentElement.insertBefore(menuToggle, nav);
+  }
   nav.innerHTML = '<a href="#home">Home</a><a href="projects.html">Projects ↗</a><a href="#capabilities">Capabilities</a><a href="#process">How I work</a><a href="#about">About</a><a href="#contact">Contact</a>';
+  const closeMobileMenu = () => { nav.classList.remove('is-open'); menuToggle?.setAttribute('aria-expanded', 'false'); menuToggle?.querySelector('.sr-only').replaceChildren(document.createTextNode('Open menu')); };
+  menuToggle?.addEventListener('click', () => { const isOpen = nav.classList.toggle('is-open'); menuToggle.setAttribute('aria-expanded', String(isOpen)); menuToggle.querySelector('.sr-only').replaceChildren(document.createTextNode(isOpen ? 'Close menu' : 'Open menu')); });
+  nav.addEventListener('click', (event) => { if (event.target.closest('a')) closeMobileMenu(); });
   function keyFromHash() { const key = location.hash.slice(1) || 'home'; return sections[key] ? key : 'home'; }
   async function showSection(key, animate = true) {
     if (key === active) return;
